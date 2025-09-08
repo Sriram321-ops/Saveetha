@@ -1,0 +1,868 @@
+companey specific problem solving
+
+
+
+
+1.Problem Description :
+  The function accepts two positive integers ‘r’ and ‘unit’ and a positive integer array ‘arr’ of 
+  size ‘n’ as its argument ‘r’ represents the number of rats present in an area, ‘unit’ is the amount of 
+  food each rat consumes and each ith element of array ‘arr’ represents the amount of food present 
+  in ‘i+1’ house number, where 0 <= i
+
+Note:
+
+Return -1 if the array is null
+Return 0 if the total amount of food from all houses is not sufficient for all the rats.
+Computed values lie within the integer range.
+Example:
+
+Input:
+
+  r: 7
+  unit: 2
+  n: 8
+  arr: 2 8 3 5 7 4 1 2
+  Output:
+  4
+
+Explanation:
+Total amount of food required for all rats = r * unit
+rats= 7 * 2 = 14.
+The amount of food in 1st houses = 2+8+3+5 = 18. Since, 
+amount of food in 1st 4 houses is sufficient for all the rats. Thus, output is 4.
+
+
+
+
+coding:
+
+
+import java.util.*;
+class Main
+{
+  public static int solve (int r, int unit, int arr[], int n)
+  {
+    if (arr == null)
+      return -1;
+    int res = r * unit;
+    int sum = 0;
+    int count = 0;
+    for (int i = 0; i < n; i++)
+      {
+	sum = sum + arr[i];
+	count++;
+	if (sum >= res)
+	  break;
+      }
+    if (sum < res)
+        return 0;
+    return count;
+  }
+  public static void main (String[]args)
+  {
+    Scanner sc = new Scanner (System.in);
+    int r = sc.nextInt ();
+    int unit = sc.nextInt ();
+    int n = sc.nextInt ();
+    int arr[] = new int[n];
+
+    for (int i = 0; i < n; i++)
+      arr[i] = sc.nextInt ();
+    System.out.println (solve (r, unit, arr, n));
+  }
+}
+
+
+
+_____________________________________________________________
+
+2.Problem Description :
+The Binary number system only uses two digits, 0 and 1 and number system can be called binary string. 
+You are required to implement the following function:
+
+int OperationsBinaryString(char* str);
+
+The function accepts a string str as its argument. The string str consists of binary digits eparated 
+with an alphabet as follows:
+
+– A denotes AND operation
+– B denotes OR operation
+– C denotes XOR Operation
+You are required to calculate the result of the string str, scanning the string to right taking one 
+opearation at a time, and return the same.
+
+Input:
+    str: 1C0C1C1A0B1
+
+   Output:
+     1
+
+Explanation:
+The alphabets in str when expanded becomes “1 XOR 0 XOR 1 XOR 1 AND 0 OR 1”, result of the expression becomes 1, 
+hence 1 is returned.
+
+Sample Input:
+0C1A1B1C1C1B0A0
+
+
+Output:
+0
+
+
+
+code:
+
+import java.util.*;
+class Main
+{
+  public static int operationsBinaryString (String str)
+  {
+    if (str == null)
+      return -1;
+    int res = str.charAt (0) - '0';
+    for (int i = 1; i < str.length ();)
+      {
+	char prev = str.charAt (i);
+	  i++;
+	if (prev == 'A')
+	  res = res & (str.charAt (i) - '0');
+	else if (prev == 'B')
+	  res = res | (str.charAt (i) - '0');
+	else
+	    res = res ^ (str.charAt (i) - '0');
+	  i++;
+      }
+    return res;
+  }
+  public static void main (String[]args)
+  {
+    Scanner sc = new Scanner (System.in);
+    String str = sc.next ();
+    System.out.println (operationsBinaryString (str));
+  }
+}
+
+
+
+___________________________________________________________
+
+3. You are given a function.
+int CheckPassword(char str[], int n);
+The function accepts string str of size n as an argument. Implement the function which returns 1 if given string str 
+is valid password else 0.
+str is a valid password if it satisfies the below conditions.
+
+– At least 4 characters
+– At least one numeric digit
+– At Least one Capital Letter
+– Must not have space or slash (/)
+– Starting character must not be a number
+Assumption:
+Input string will not be empty.
+
+Example:
+
+Input 1:
+aA1_67
+Input 2:
+a987 abC012
+
+Output 1:
+1
+Output 2:
+0
+
+
+coding:
+
+import java.util.*;
+class Solution
+{
+  public static int checkPassword (String str, int n)
+  {
+    if (n < 4)
+      return 0;
+    if (str.charAt (0) >= '0' && str.charAt (0) <= '9')
+      return 0;
+    int num = 0, cap = 0;
+    for (int i = 0; i < n; i++)
+      {
+	if (str.charAt (i) == ' ' || str.charAt (i) == '/')
+	  return 0;
+	if (str.charAt (i) >= 'A' && str.charAt (i) <= 'Z')
+	  cap++;
+	if (str.charAt (i) >= '0' && str.charAt (i) <= '9')
+	  num++;
+      }
+    if (cap > 0 && num > 0)
+        return 1;
+    else
+      return 0;
+  }
+  public static void main (String[]args)
+  {
+    Scanner sc = new Scanner (System.in);
+    String str = sc.next ();
+    System.out.println (checkPassword (str, str.length ()));
+  }
+}
+
+___________________________________________________________
+
+4.
+You are given a function,
+int findCount(int arr[], int length, int num, int diff);
+
+The function accepts an integer array ‘arr’, its length and two integer variables ‘num’ and ‘diff’. 
+Implement this function to find and return the number of elements of ‘arr’ having an absolute 
+difference of less than or equal to ‘diff’ with ‘num’.
+Note: In case there is no element in ‘arr’ whose absolute difference with ‘num’ is less than or equal 
+to ‘diff’, return -1.
+
+Example:
+Input:
+arr: 12 3 14 56 77 13
+num: 13
+diff: 2
+Output:
+3
+
+Explanation:
+Elements of ‘arr’ having absolute difference of less than or equal to ‘diff’ i.e. 2 with ‘num’ i.e. 13
+are 12, 13 and 14.
+
+
+
+
+
+
+
+
+code:
+
+import java.util.*;
+class Main
+{
+  public static int findCount (int arr[], int length, int num, int diff)
+  {
+    int count = 0;
+    for (int i = 0; i < length; i++)
+      {
+	if (Math.abs (num - arr[i]) <= diff)
+	  count++;
+      }
+    return count > 0 ? count : -1;
+  }
+  public static void main (String[]args)
+  {
+    Scanner sc = new Scanner (System.in);
+    int n = sc.nextInt ();
+    int arr[] = new int[n];
+    for (int i = 0; i < n; i++)
+      arr[i] = sc.nextInt ();
+    int num = sc.nextInt ();
+    int diff = sc.nextInt ();
+
+    System.out.println (findCount (arr, n, num, diff));
+  }
+}
+
+__________________________________________________
+
+
+
+5.
+The function accepts two integers n, m as arguments Find the sum of all numbers in range from 1 to 
+m(both inclusive) that are not divisible by n. Return difference between sum of integers not 
+divisible by n with sum of numbers divisible by n.
+
+Assumption:
+
+n>0 and m>0
+Sum lies between integral range
+Example
+
+Input
+n:4
+m:20
+Output
+90
+
+
+
+
+
+
+
+Explanation
+
+Sum of numbers divisible by 4 are 4 + 8 + 12 + 16 + 20 = 60
+Sum of numbers not divisible by 4 are 1 +2 + 3 + 5 + 6 + 7 + 9 + 10 + 11 + 13 + 14 + 15 + 17 + 18 + 19 = 150
+Difference 150 – 60 = 90
+Sample Input
+n:3
+m:10
+Sample Output
+19
+
+
+coding:
+
+import java.util.*;
+class Solution 
+{
+    public static int differenceOfSum (int m, int n) 
+    {
+        int sum1 = 0, sum2 = 0;
+        for (int i = 1; i <= m; i++)
+        {
+            if (i % n == 0)
+                sum1 = sum1 + i;
+    	    else    
+                sum2 = sum2 + i;
+        }
+        return Math.abs (sum1 - sum2);
+    }
+  
+    public static void main (String[]args) 
+    {
+        Scanner sc = new Scanner (System.in);
+        int n = sc.nextInt ();
+        int m = sc.nextInt ();
+        System.out.println (differenceOfSum (m, n));
+    } 
+}
+
+_____________________________________________________________
+
+6.
+The function accepts an integers arr of size ’length’ as its arguments you are required to return 
+the sum of second largest  element from the even positions and second smallest from the odd position 
+of given ‘arr’
+
+Assumption:
+All array elements are unique
+  
+Treat the 0th position as even
+  
+NOTE
+Return 0 if array is empty
+Return 0, if array length is 3 or less than 3
+Example
+
+Input
+
+arr:3 2 1 7 5 4
+Output
+7
+
+Explanation
+
+Second largest among even position elements(1 3 5) is 3
+Second smallest among odd position element is 4
+Thus output is 3+4 = 7
+Sample Input
+
+arr:1 8 0 2 3 5 6
+
+Sample Output
+
+8
+
+
+code:
+
+import java.util.*;
+class Main
+{
+  public static int largeSmallSum (int[]arr, int n)
+  {
+    if (n <= 3)
+      return 0;
+    ArrayList < Integer > even = new ArrayList < Integer > ();
+    ArrayList < Integer > odd = new ArrayList < Integer > ();
+    even.add (arr[0]);
+
+    for (int i = 1; i < arr.length; i++)
+      {
+	if (i % 2 == 0)
+	  even.add (arr[i]);
+	else
+	  odd.add (arr[i]);
+      }
+    Collections.sort (even);
+    Collections.sort (odd);
+
+    return even.get (even.size () - 2) + odd.get (odd.size () - 2);
+  }
+
+  public static void main (String[]args)
+  {
+    Scanner sc = new Scanner (System.in);
+    int n = sc.nextInt ();
+    int arr[] = new int[n];
+    for (int i = 0; i < n; i++)
+      arr[i] = sc.nextInt ();
+
+    System.out.println (largeSmallSum (arr, n));
+  }
+}
+
+
+
+____________________________________________________________
+
+7.
+
+The function accepts an integers sum and an integer array arr of size n. Implement the function to find the pair, (arr[j], arr[k]) where j!=k, Such that arr[j] and arr[k] are the least two elements of array (arr[j] + arr[k] <= sum) and return the product of element of this pair
+
+Example
+
+Input
+
+sum:9
+
+size of Arr = 7
+
+Arr:5 2 4 3 9 7 1
+
+Output
+
+2
+
+Explanation
+
+Pair of least two element is (2, 1) 2 + 1 = 3 < 9, Product of (2, 1) 2*1 = 2. Thus, output is 2
+
+Sample Input
+
+sum:4
+
+size of Arr = 6
+
+Arr:9 8 3 -7 3 9
+
+Sample Output
+
+-21
+
+
+code:
+
+import java.util.*;
+class Main 
+{
+    public static int productSmallestPair (int arr[], int n, int sum) 
+    {
+        if (n <2)
+            return -1;
+        int ans, temp, check;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = i + 1; j < n; j++)
+    	    {
+                if (arr[i] > arr[j])
+    	        {
+                    temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
+                }
+            }
+        }
+        check = arr[0] + arr[1];
+if (check <= sum)
+return arr[0] * arr[1];
+else
+return 0;
+}
+
+public static void main (String[]args)
+{
+Scanner sc = new Scanner (System.in);
+int sum = sc.nextInt ();
+int n = sc.nextInt ();
+int arr[] = new int[n];
+
+for (int i = 0; i < n; i++)
+arr[i] = sc.nextInt ();
+System.out.println (productSmallestPair (arr, n, sum));
+}
+}
+
+________________________________________________________
+
+8.
+
+N-base notation is a system for writing numbers that uses only n different symbols, 
+This symbols are the first n symbols from the given notation list(Including the symbol for o) 
+Decimal to n base notation are (0:0, 1:1, 2:2, 3:3, 4:4, 5:5, 6:6, 7:7, 8:8, 9:9, 10:A,11:B and 
+so on upto 35:Z)
+
+Implement the following function
+
+Char* DectoNBase(int n, int num):
+
+The function accept positive integer n and num Implement the function to calculate the n-base 
+equivalent of num and return the same as a string
+
+Steps:
+
+Divide the decimal number by n,Treat the division as the integer division
+Write the the remainder (in  n-base notation)
+Divide the quotient again by n, Treat the division as integer division
+Repeat step 2 and 3 until the quotient is 0
+The n-base value is the sequence of the remainders from last to first
+Assumption:
+1 < n < = 36
+
+Example
+
+Input
+n: 12
+num: 718
+
+Output
+4BA
+
+Explanation
+num       Divisor       quotient       remainder
+718           12               59                 10(A)
+59             12                4                   11(B)
+4               12                0                   4(4)
+
+Sample Input
+n: 21
+num: 5678
+
+Sample Output
+CI8
+
+
+
+
+
+code:
+
+import java.util.*;
+class Main
+{
+  public static String dectoNBase (int n, int num)
+  {
+    String res = "";
+    int quotient = num / n;
+      ArrayList < Integer > rem = new ArrayList < Integer > ();
+      rem.add (num % n);
+    while (quotient != 0)
+      {
+	rem.add (quotient % n);
+	quotient = quotient / n;
+      }
+    for (int i = 0; i < rem.size (); i++)
+      {
+	if (rem.get (i) > 9)
+	  {
+	    res = (char) (rem.get (i) - 9 + 64) + res;
+	  }
+	else
+	  res = rem.get (i) + res;
+      }
+    return res;
+  }
+  public static void main (String[]args)
+  {
+    Scanner sc = new Scanner (System.in);
+    int n = sc.nextInt ();
+    int num = sc.nextInt ();
+    System.out.println (dectoNBase (n, num));
+  }
+} 
+
+__________________________________________________
+
+9.
+
+The function accepts a string “str” of length ‘n’, that contains alphabets and hyphens (-). 
+Implement the function to move all hyphens(-) in the string to the front of the given string.
+
+NOTE:- Return null if str is null.
+
+Example :-
+
+Input:
+str.Move-Hyphens-to-Front
+Output:
+—MoveHyphenstoFront
+Explanation:-
+
+The string “Move-Hyphens -to-front” has 3 hyphens (-), which are moved to the front of the string, 
+this output is “— MoveHyphen”
+
+
+code:
+
+import java.util.*;
+class Solution 
+{
+    public static String moveHyphen (String str, int n) 
+    {
+        String res = "";
+        for (int i = 0; i < n; i++)
+        {
+            if (str.charAt (i) == '-')
+                res = str.charAt (i) + res;
+    	    else
+                res = res + str.charAt (i);
+        }
+        return res;
+    }
+public static void main (String[]args)
+{
+Scanner sc = new Scanner (System.in);
+String str = sc.next ();
+
+System.out.println (moveHyphen (str, str.length ()));
+}
+}
+
+_____________________________________________________________
+
+10.
+
+A carry is a digit that is transferred to left if sum of digits exceeds 9 while adding two numbers from right-to-left one digit at a time
+
+You are required to implement the following function.
+
+Int NumberOfCarries(int num1 , int num2);
+
+The functions accepts two numbers ‘num1’ and ‘num2’ as its arguments. You are required to calculate and return  the total number of carries generated while adding digits of two numbers ‘num1’ and ‘ num2’.
+
+Assumption: num1, num2>=0
+
+Example:
+
+Input
+Num 1: 451
+Num 2: 349
+Output
+2
+Explanation:
+
+Adding ‘num 1’ and ‘num 2’ right-to-left results in 2 carries since ( 1+9) is 10. 1 is carried and (5+4=1) is 10, again 1 is carried. Hence 2 is returned.
+
+Sample Input
+
+Num 1: 23
+
+Num 2: 563
+
+Sample Output
+
+0
+
+coding:
+
+import java.util.*;
+class Main 
+{
+    public static int numberOfCarries (int num1, int num2) 
+    {
+        int count = 0;
+        int temp1 = num1, temp2 = num2;
+        int rem = 0;
+        while (temp1 != 0 && temp2 != 0)
+        {
+            int d1 = temp1 % 10, d2 = temp2 % 10;
+            if ((d1 + d2 + rem) > 9)
+    	    {
+                count++;
+                int sum = d1 + d2 + rem;
+                sum = sum / 10;
+                rem = sum;
+            }
+            temp1 = temp1 / 10;
+            temp2 = temp2 / 10;
+        } 
+        while(temp1!=0)
+        {
+            int d1=temp1%10;
+            if((d1+rem)>9)
+            {
+                count++;
+                int sum=d1+rem;
+                sum=sum/10;
+                rem=sum;
+            }
+            temp1=temp1/10;
+        }
+        while(temp2!=0)
+        {
+            int d2=temp2%10;
+            if((d2+rem)>9)
+            {
+                count++;
+                int sum=d2+rem;
+                sum=sum/10;
+                rem=sum;
+            }
+            temp2=temp2/10;
+        }
+        return count;
+    }
+    public static void main (String[]args) 
+    {
+        Scanner sc = new Scanner (System.in);
+        int num1 = sc.nextInt ();
+        int num2 = sc.nextInt ();
+System.out.println (numberOfCarries (num1, num2));
+}
+}
+
+
+__________________________________________
+
+
+11.
+
+given a function,
+
+Void *ReplaceCharacter(Char str[], int n, char ch1, char ch2);
+
+The function accepts a string  ‘ str’ of length n and two characters ‘ch1’ and ‘ch2’ as its arguments .
+Implement the function to modify and return the string ‘ str’ in such a way that all occurrences of 
+‘ch1’ in original string are replaced by ‘ch2’ and all occurrences of ‘ch2’  in original string are 
+replaced by ‘ch1’.
+
+Assumption: String Contains only lower-case alphabetical letters.
+
+Note:
+
+Return null if string is null.
+If both characters are not present in string or both of them are same , then return the string 
+unchanged.
+Example:
+
+Input:
+Str: apples
+ch1:a
+ch2:p
+Output:
+paales
+Explanation:
+
+‘A’ in original string is replaced with ‘p’ and ‘p’ in original string is replaced with ‘a’, 
+output is paales.
+
+
+coding:
+
+
+import java.util.*;
+class Solution 
+{
+    public static void replaceChar (String str, char ch1, char ch2) 
+    {
+        String res = "";
+for (int i = 0; i < str.length (); i++)
+{
+if (str.charAt (i) == ch1)
+res = res + ch2;
+else if (str.charAt (i) == ch2)
+res = res + ch1;
+else
+res = res + str.charAt (i);
+}
+System.out.println (res);
+}
+
+public static void main (String[]args)
+{
+Scanner sc = new Scanner (System.in);
+String str = sc.next ();
+char ch1 = sc.next ().charAt (0);
+char ch2 = sc.next ().charAt (0);
+
+replaceChar (str, ch1, ch2);
+}
+}
+
+
+
+_________________________________________________
+
+12.  
+
+Harry is very much interested in learning numerology with a programming Language. 
+Help Harry to implement this task. 
+Write a java program to find the sum of the digits and the numerology number
+(Multi-digit numbers are added and reduced to a single digit), followed by the total number of 
+odd numbers and 
+the total number of even numbers.Assume input is greater than zero and less than 10000000.
+
+For example, if the given number is 7654 then,
+
+Sum of digits: 22 (7+6+5+4)
+
+Numerology number: 4 ((7+6+5+4 =22 => 2+2) sum of digits is again added and reduced to a single digit).
+
+Number of odd numbers: 2
+
+Number of even numbers: 2
+
+Sample input:
+
+86347
+
+Sample output:
+
+Sum of digits 
+28
+Numerology number
+1
+Number of odd numbers
+2
+Number of even numbers
+3
+
+Solution :
+
+import java.util.*;
+public class Main
+{
+  
+  public static int sumOfDigit(int n){
+    int sum=0;
+    while(n>0){
+      sum+=n%10;
+      n/=10;
+    }
+    return sum;
+  }
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		int num=n;
+		int odd=0;
+		int even=0;
+		while(num>0){
+		  int rem=num%10;
+		  if(rem%2==0)
+		  even++;
+		  else
+		  odd++;
+		  
+		  num/=10;
+		}
+		int sum=sumOfDigit(n);
+		while(sum>9)
+		  sum=sumOfDigit(sum);
+		  
+		  System.out.println(sum);
+
+
+ 
+		  System.out.println(even);
+		  System.out.println(odd);
+		
+	}
+}
+
